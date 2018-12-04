@@ -1,0 +1,52 @@
+>> similar to func-c.c
+
+int main() {
+	f1( 37, 14 )
+}
+
+int f( int a, int b ) {
+	return a * 32 + b ;
+}
+
+int g(  ) {
+	f( 34, 55 )
+}
+
+
+# main code: variables for 37, 14, , $sp, jal and jr
+main:
+	
+
+f: addi $sp, $sp, -4
+	sw $ra, 0($sp)
+	lw $t0, 4($sp)
+	sll $t0, $t0, 5 # * 2^5, aka 32
+		# shifting right is srl for some reason
+	lw $t1, 8($sp)
+	add $v0, $t0, $t1
+	lw $ra, 0($sp)
+	
+	addi $sp, $sp, 4
+	jr $ra
+	
+		#	in this case, a and b are still kept in the stack
+		
+g:	addi $sp, $sp, -4
+	sw $ra, 0($sp)
+	
+	li $t0, 55
+	addi $sp, $sp, -4
+	sw $t0, 0($sp)
+	
+	li $t0, 34
+	addi $sp, $sp, -4
+	sw $t0, 0($sp)
+	
+	jal f
+	
+	addi $sp, $sp, 8
+	lw $ra, 0($sp)
+	addi $sp, $sp, 4
+	
+	jr $ra
+	
