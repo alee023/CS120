@@ -1,0 +1,44 @@
+OTHER WAY for problem 12 C code
+	while( *s0 != 0 ) {
+		s1 += *s0 ;
+		++ s0 ;
+	}
+
+MIPS	
+	( moving a pointer )
+	li $s1, 0
+	loop:
+		lw $t0, 0($sp)
+		beq $t0, $0, done
+		add $s1, $s1, $t0
+		addi $s0, $s0, 4
+		j loop
+	done: 
+	
+	( alternate approach -- offset? )
+	li $s1, 0
+	li $t1, 0
+	loop:
+		sll $t2, $t1, 2
+		addi $t2, $t2, $s0
+		lw $t2, 0($t2)
+		beq $t2, $0, done
+		add $s1, $s1, $t1
+		addi $t1, $t1, 1
+		j loop
+		
+===================
+13
+
+add_eight:
+	lw $t0, 0($sp)	# x in t0
+	lw $t1, 0($t0)	# *x in t1
+	bne $t1, $t0, else_part
+		li $t1, 8
+		sw $t1, 0($t0)
+		j done
+	else part:
+		addi $t1, $t1, 5
+		sw $t1, 0($t0)
+		
+		jr $ra

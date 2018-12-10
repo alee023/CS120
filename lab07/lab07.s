@@ -31,7 +31,7 @@ loop:
 	addi $t2, $t2, 7
 	sw $t2, 0($s0)
 
-	Endif:
+	Endif:			# ends the entire conditional block
 	addi $s1, $s1, 1
 	j loop
 
